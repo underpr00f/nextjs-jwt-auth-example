@@ -1,0 +1,19 @@
+{
+	"presets": [
+		[
+			"next/babel",
+			"@zeit/next-typescript/babel",
+			{
+				"preset-env": {
+					"targets": ">2%, last 2 version, not dead",
+				},
+				"transform-runtime": {
+					"corejs": false,
+					"absoluteRuntime": false
+				},
+				"styled-jsx": {},
+				"class-properties": {}
+			}
+		]
+	]
+}

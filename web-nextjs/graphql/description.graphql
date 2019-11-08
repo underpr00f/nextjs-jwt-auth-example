@@ -1,0 +1,8 @@
+mutation Description($email: String!, $description: String!) {
+  description(email: $email, description: $description) {
+    user {
+      email
+      description
+    }
+  }
+}

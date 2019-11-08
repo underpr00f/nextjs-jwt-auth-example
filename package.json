@@ -1,0 +1,11 @@
+{
+  "name": "jwt-auth-example",
+  "version": "1.0.0",
+  "author": "underproof",
+  "license": "MIT",
+  "scripts": {
+    "dev": "(cd server && yarn start) & (cd web-nextjs && yarn dev)",
+    "prod": "(cd server && yarn start) & (cd web-nextjs && yarn build && yarn start)",
+    "deploy": "(cd server && yarn deploy) & (cd web-nextjs && yarn build && yarn start)"
+  }
+}
