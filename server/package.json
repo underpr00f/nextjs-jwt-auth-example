@@ -11,8 +11,8 @@
     "@types/jsonwebtoken": "^8.3.3",
     "@types/node": "^12.7.5",
     "nodemon": "^1.19.2",
-    "ts-node": "8.3.0",
-    "typescript": "3.6.3"
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "@types/mongodb": "^3.3.8",
@@ -31,7 +31,10 @@
     "typeorm": "0.2.19"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts",
-    "deploy": "NODE_ENV=production nodemon --exec ts-node src/index.ts"
+    "start:dev": "nodemon --exec ts-node src/index.ts",
+    "build-ts": "tsc",
+    "postinstall": "npm run build-ts",
+    "start": "npm run serve",
+    "serve": "NODE_ENV=production node dist/index.js"
   }
 }

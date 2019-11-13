@@ -12,14 +12,14 @@ import { User } from "./entity/User";
 import { sendRefreshToken } from "./sendRefreshToken";
 import { createAccessToken, createRefreshToken } from "./auth";
 import { ObjectId } from 'mongodb';
-import { siteURL } from './constants';
+import { frontURL } from './constants';
 
 (async () => {
-  const PORT = process.env.PORT || 4000;
   const app = express();
+  const PORT = process.env.PORT || 4000;
   app.use(
     cors({
-      origin: `${siteURL}`,
+      origin: `${frontURL}`,
       credentials: true
     })
   );
@@ -68,7 +68,7 @@ import { siteURL } from './constants';
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(PORT, () => {
-    console.log("frontend started on", siteURL, "express server on port", PORT);
+    console.log("frontend started on", frontURL, "express server on port", PORT);
   });
 })();
 

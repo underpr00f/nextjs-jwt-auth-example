@@ -1,3 +1,51 @@
+const { join } = require('path');
+const recursiveCopy = require('recursive-copy');
+const withPlugins = require("next-compose-plugins");
+const withSass = require('@zeit/next-sass');
+
+// const { getPosts } = require('./get-posts'); // This is a list of entries
+require('dotenv').config()
+
+module.exports = withPlugins( 
+  [
+    withSass
+  ], 
+  {
+	env: {
+		API_URL: process.env.API_URL
+	},
+    exportPathMap: async function(
+      defaultPathMap,
+      { dev, dir, outDir, distDir, buildId }
+    ) {
+
+      if (dev) {
+        return defaultPathMap;
+      }
+      const pathMap = {
+        '/': { page: '/' },
+        '/bye': { page: '/bye'},
+        '/description': { page: '/description' },
+        '/login': { page: '/login' },
+        '/meet': { page: '/meet' },
+        '/register': { page: '/register' }
+      };
+      // now get the dynamic stuff:
+      // const articles = await getPosts();
+      // articles.map(post => {
+      //   pathMap[`/posts/post/${post.link}`] = { page: '/posts/post', query: { title: post.link } };
+      // });
+
+      // This will copy robots.txt from your project root into the out directory
+      // await copyFile(join(dir, 'robots.txt'), join(outDir, 'robots.txt'));
+      await recursiveCopy(join(dir, 'static/'), outDir, {dot:true});
+      return pathMap;
+    },
+    // target: 'serverless',
+  }
+);
+
+
 // const sass = require('@zeit/next-sass');
 // const CSS = require('@zeit/next-css');
 // const withPlugins = require('next-compose-plugins');
@@ -8,7 +56,12 @@
 // const withSourceMaps = require('@zeit/next-source-maps');
 
 // const isProd = process.env.NODE_ENV === 'production';
-
+// require('dotenv').config()
+// module.exports = {
+//   env: {
+//     API_URL: process.env.API_URL
+//   }
+// }
 // const nextConfig = {
 //   serverRuntimeConfig: {},
 //   publicRuntimeConfig: { // Will be available on both server and client

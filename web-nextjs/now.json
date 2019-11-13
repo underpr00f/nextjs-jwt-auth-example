@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "web-nextjs",
+    "builds": [
+        { "src": "next.config.js", "use": "@now/next" }
+    ],
+    "build": {
+		"env": {
+			"API_URL": "@api-url"
+		}
+	},
+    "env": {
+    	"API_URL": "@api-url"
+    }
+}

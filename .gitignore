@@ -7,3 +7,4 @@ temp/
 .env
 ormconfigMongo.json
 ormconfigPostgres.json
+**/yarn.lock

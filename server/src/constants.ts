@@ -1,1 +1,1 @@
-export const siteURL = process.env.NODE_ENV && (process.env.NODE_ENV === "production") ? process.env.SITE_URL : "http://localhost:3000";
+export const frontURL = process.env.NODE_ENV && (process.env.NODE_ENV === "production") ? process.env.FRONT_URL : "http://localhost:3000";

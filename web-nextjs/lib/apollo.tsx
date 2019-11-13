@@ -11,6 +11,7 @@ import { getAccessToken, setAccessToken } from "./accessToken";
 import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import cookie from "cookie";
+import { API_URL } from "../utils/constants";
 
 const isServer = () => typeof window === "undefined";
 
@@ -62,7 +63,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
       if (isServer()) {
         const cookies = cookie.parse(req.headers.cookie);
         if (cookies.jid) {
-          const response = await fetch("http://localhost:4000/refresh_token", {
+          const response = await fetch(`${API_URL}`+"/refresh_token", {
             method: "POST",
             credentials: "include",
             headers: {
@@ -162,7 +163,7 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
   const httpLink = new HttpLink({
-    uri: "http://localhost:4000/graphql",
+    uri: `${API_URL}`+"/graphql",
     credentials: "include",
     fetch
   });
@@ -188,7 +189,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
       }
     },
     fetchAccessToken: () => {
-      return fetch("http://localhost:4000/refresh_token", {
+      return fetch(`${API_URL}`+"/refresh_token", {
         method: "POST",
         credentials: "include"
       });
