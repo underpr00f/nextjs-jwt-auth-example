@@ -5,6 +5,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "(cd server && yarn start) & (cd web-nextjs && yarn dev)",
-    "prod": "(cd server && yarn start) & (cd web-nextjs && yarn build && yarn start)",
+    "prod": "(cd server && yarn start) & (cd web-nextjs && yarn build && yarn start)"
   }
 }

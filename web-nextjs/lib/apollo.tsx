@@ -11,6 +11,7 @@ import { getAccessToken, setAccessToken } from "./accessToken";
 import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import cookie from "cookie";
+
 import { API_URL } from "../utils/constants";
 
 const isServer = () => typeof window === "undefined";
@@ -162,6 +163,7 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  * @param  {Object} config
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
+  console.log("API_URL", API_URL);
   const httpLink = new HttpLink({
     uri: `${API_URL}`+"/graphql",
     credentials: "include",

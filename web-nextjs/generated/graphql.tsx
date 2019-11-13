@@ -70,6 +70,7 @@ export type User = {
   email: Scalars['String'],
   description: Scalars['String'],
 };
+
 export type ByeQueryVariables = {};
 
 
@@ -173,6 +174,7 @@ export type UsersQuery = (
     & Pick<User, 'id' | 'email'>
   )> }
 );
+
 
 export const ByeDocument = gql`
     query Bye {

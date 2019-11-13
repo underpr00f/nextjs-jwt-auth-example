@@ -1,7 +1,15 @@
 {
   "name": "server",
   "version": "0.0.1",
+  "license": "MIT",
   "description": "Awesome project developed with TypeORM.",
+  "scripts": {
+    "start:dev": "nodemon --exec ts-node src/index.ts",
+    "build-ts": "tsc",
+    "postinstall": "npm run build-ts",
+    "start": "npm run serve",
+    "serve": "NODE_ENV=production node dist/index.js"
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
@@ -29,12 +37,5 @@
     "reflect-metadata": "^0.1.10",
     "type-graphql": "^0.17.5",
     "typeorm": "0.2.19"
-  },
-  "scripts": {
-    "start:dev": "nodemon --exec ts-node src/index.ts",
-    "build-ts": "tsc",
-    "postinstall": "npm run build-ts",
-    "start": "npm run serve",
-    "serve": "NODE_ENV=production node dist/index.js"
   }
 }
