@@ -36,16 +36,27 @@ FRONT_URL - your front deploy
 1. Setup now, add API_URL in .env - backend graphql entry point 
 2. For deploy set secrets add:
  now secrets add api-url https://hello-world.com
-3. For deploy write in console
- now
-4. package.json
-    "dev": development on localhost:3000,
-    "build": for deployment build,
-    "start": for deployment serve,
-    "type-check": for typescript,
-    "gen": if you change .graphql files need gen new graphql-hooks
-5. Change graphql queries in /graphql, get graphql hooks from /generated
-6. Your static in /static directory (favicon, ...etc)
-7. Pages need in /pages directory (NextJS feature)
-8. Components for pages in /components
-
+3. Don't forget to specify in now.json theese secrets
+4. For deploy write in console
+ - now
+5. package.json
+    - "dev": development on localhost:3000,
+    - "build": for deployment build (locally not works - incorrect path use staging),
+    - "start": for deployment serve (locally not works - incorrect path use staging),
+    - "type-check": for typescript,
+    - "gen": if you change .graphql files need gen new graphql-hooks
+    - "build:staging": for build staging like-deployment build
+    - "start:staging": for start staging like-deployment server
+6. For test deploy in now locally write in console
+ - now dev 
+ - (need add secrets to .env.build)
+7. To provide process.env variables from express to global constants - add to next.config.js in   	
+    env: {
+      API_URL: process.env.API_URL,
+      ENV: process.env.ENV
+    },
+8. Change graphql queries in /graphql, get graphql hooks from /generated
+9. Your static in /static directory (favicon, ...etc)
+10. Pages need in /pages directory (NextJS feature)
+11. Components for pages in /components
+12. If graphql throw undefined error, need to compare API_URL (or check conditions) - probably API_URL is undefined

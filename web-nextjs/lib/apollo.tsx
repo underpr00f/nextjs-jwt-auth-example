@@ -163,7 +163,6 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  * @param  {Object} config
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
-  console.log("API_URL", API_URL);
   const httpLink = new HttpLink({
     uri: `${API_URL}`+"/graphql",
     credentials: "include",

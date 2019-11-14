@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "dev:test": "ENV=testing next",
     "build": "next build",
     "start": "next start",
     "build:staging": "ENV=staging next build",

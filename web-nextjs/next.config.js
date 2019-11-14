@@ -5,16 +5,14 @@ const withSass = require('@zeit/next-sass');
 
 require('dotenv').config()
 
-// const phase = process.env.ENV;
-// console.log("phase",phase, process.env.API_URL);
-
-module.exports = () => withPlugins( 
+module.exports = withPlugins( 
   [
     withSass
   ], 
   {      
   	env: {
-  		API_URL: process.env.API_URL
+  		API_URL: process.env.API_URL,
+      ENV: process.env.ENV
   	},
     exportPathMap: async function(
       defaultPathMap,
