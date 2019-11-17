@@ -20,7 +20,8 @@ FRONT_URL - your front deploy
 
 5. ProcFile for heroku deploy
 
-6. package.json To locally start dev server - yarn start:dev
+6. package.json To locally start dev server 
+ - yarn start:dev
 
 7. to update backend with git heroku
  - add secret variables from .env manually
