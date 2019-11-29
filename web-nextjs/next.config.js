@@ -14,35 +14,34 @@ module.exports = withPlugins(
   		API_URL: process.env.API_URL,
       ENV: process.env.ENV
   	},
-    exportPathMap: async function(
-      defaultPathMap,
-      { dev, dir, outDir, distDir, buildId }
-    ) {
+    // exportPathMap: async function(
+    //   defaultPathMap,
+    //   { dev, dir, outDir, distDir, buildId }
+    // ) {
 
-      if (dev) {
-        return defaultPathMap;
-      }
-      const pathMap = {
-        '/': { page: '/' },
-        '/bye': { page: '/bye'},
-        '/description': { page: '/description' },
-        '/login': { page: '/login' },
-        '/meet': { page: '/meet' },
-        '/register': { page: '/register' }
-      };
-      // now get the dynamic stuff:
-      // const articles = await getPosts();
-      // articles.map(post => {
-      //   pathMap[`/posts/post/${post.link}`] = { page: '/posts/post', query: { title: post.link } };
-      // });
+    //   if (dev) {
+    //     return defaultPathMap;
+    //   }
+    //   const pathMap = {
+    //     '/': { page: '/' },
+    //     '/bye': { page: '/bye'},
+    //     '/description': { page: '/description' },
+    //     '/login': { page: '/login' },
+    //     '/meet': { page: '/meet' },
+    //     '/register': { page: '/register' }
+    //   };
+    //   // now get the dynamic stuff:
+    //   // const articles = await getPosts();
+    //   // articles.map(post => {
+    //   //   pathMap[`/posts/post/${post.link}`] = { page: '/posts/post', query: { title: post.link } };
+    //   // });
 
-      // This will copy robots.txt from your project root into the out directory
-      // await copyFile(join(dir, 'robots.txt'), join(outDir, 'robots.txt'));
-      await recursiveCopy(join(dir, 'public/static/'), outDir, {dot:true});
-      return pathMap;
-    },
-
-    // target: 'serverless'
+    //   // This will copy robots.txt from your project root into the out directory
+    //   // await copyFile(join(dir, 'robots.txt'), join(outDir, 'robots.txt'));
+    //   await recursiveCopy(join(dir, 'public/static/'), outDir, {dot:true});
+    //   return pathMap;
+    // },
+    target: 'serverless'
   }
 );
 

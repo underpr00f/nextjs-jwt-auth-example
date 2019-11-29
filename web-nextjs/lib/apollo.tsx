@@ -60,10 +60,15 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
       } = ctx;
 
       let serverAccessToken = "";
-
       if (isServer()) {
-        const cookies = cookie.parse(req.headers.cookie);
-        if (cookies.jid) {
+        let cookies;
+
+        // const cookies = await cookie.parse(req.headers.cookie);
+        if (req.headers.cookie) {
+          cookies = cookie.parse(req.headers.cookie);
+        }
+
+        if (cookies) {
           const response = await fetch(`${API_URL}`+"/refresh_token", {
             method: "POST",
             credentials: "include",
@@ -173,7 +178,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     accessTokenField: "accessToken",
     isTokenValidOrUndefined: () => {
       const token = getAccessToken();
-
+     
       if (!token) {
         return true;
       }
@@ -195,7 +200,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
         credentials: "include"
       });
     },
-    handleFetch: accessToken => {
+    handleFetch: accessToken => {      
       setAccessToken(accessToken);
     },
     handleError: err => {
@@ -204,8 +209,9 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     }
   });
 
-  const authLink = setContext((_request, { headers }) => {
+  const authLink = setContext((_request, { headers }) => {   
     const token = isServer() ? serverAccessToken : getAccessToken();
+
     return {
       headers: {
         ...headers,

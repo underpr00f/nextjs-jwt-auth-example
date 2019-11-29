@@ -5,10 +5,11 @@
   "description": "Awesome project developed with TypeORM.",
   "scripts": {
     "start:dev": "nodemon --exec ts-node src/index.ts",
-    "build-ts": "tsc",
-    "postinstall": "npm run build-ts",
+    "start:staging": "NODE_ENV=staging nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "postinstall": "npm run build",
     "start": "npm run serve",
-    "serve": "NODE_ENV=production node dist/index.js"
+    "serve": "NODE_ENV=production node public/index.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -19,6 +20,7 @@
     "@types/jsonwebtoken": "^8.3.3",
     "@types/node": "^12.7.5",
     "nodemon": "^1.19.2",
+    "ssl-root-cas": "^1.3.1",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2"
   },

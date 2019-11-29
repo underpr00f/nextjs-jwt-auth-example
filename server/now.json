@@ -1,0 +1,59 @@
+{
+    "version": 2,
+    "name": "server",
+    "builds": [
+        { "src": "public/**/*.js", "use": "@now/node" }
+    ],
+    "routes": [
+        {
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Headers": "*"
+            },
+            "src": "/",
+            "dest": "/public/index.js",
+            "methods": ["GET"]
+        },
+        {
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Headers": "*"
+            },
+            "src": "/graphql",
+            "dest": "/public/index.js",
+            "methods": ["GET", "POST"]
+        },
+        { 
+            "src": "/(.*)",
+            "dest": "/public/index.js",
+            "headers": {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": "true",
+              "Access-Control-Allow-Headers": "*"
+            },
+            "methods": ["GET", "POST", "OPTIONS"]
+        }
+    ],
+    "build": {
+		"env": {
+            "ACCESS_TOKEN_SECRET": "@access-token-secret",
+            "REFRESH_TOKEN_SECRET": "@refresh-token-secret",
+            "MONGO_ATLAS_USER": "@mongo-atlas-user",
+            "MONGO_ATLAS_PASS": "@mongo-atlas-pass",
+            "MONGO_ATLAS_CLUSTER": "@mongo-atlas-cluster",
+            "MONGO_ATLAS_DB": "@mongo-atlas-db",
+            "FRONT_URL": "@front-url"
+		}
+	},
+    "env": {
+        "ACCESS_TOKEN_SECRET": "@access-token-secret",
+        "REFRESH_TOKEN_SECRET": "@refresh-token-secret",
+        "MONGO_ATLAS_USER": "@mongo-atlas-user",
+        "MONGO_ATLAS_PASS": "@mongo-atlas-pass",
+        "MONGO_ATLAS_CLUSTER": "@mongo-atlas-cluster",
+        "MONGO_ATLAS_DB": "@mongo-atlas-db",
+        "FRONT_URL": "@front-url"
+    }
+}

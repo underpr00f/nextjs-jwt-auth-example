@@ -61,3 +61,94 @@ FRONT_URL - your front deploy
 10. Pages need in /pages directory (NextJS feature)
 11. Components for pages in /components
 12. If graphql throw undefined error, need to compare API_URL (or check conditions) - probably API_URL is undefined
+
+
+## STAGING MODE
+  #Backend package.json
+    "start:staging": "NODE_ENV=staging nodemon --exec ts-node src/index.ts", frontend "https://frontend.test"
+  #Frontend package.json
+    "build:staging": "ENV=staging next build", backend deployment
+    "start:staging": "ENV=staging next start", backend deployment
+    "dev:staging": "ENV=staging NODE_TLS_REJECT_UNAUTHORIZED=0 next", backend "https://example.com"
+##TO START NGINX
+sudo nano /etc/nginx/sites-available/example.com
+sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+sudo -i gedit /etc/hosts
+sudo nginx -t && sudo nginx -s reload
+
+##TO REMOVE FROM NGINX
+sudo rm /etc/nginx/sites-enabled/example.loc
+sudo rm /etc/nginx/sites-available/example.loc
+
+##TO ADD CERT (DON'T forget to add sert to frontend like frontendsert)
+/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src$ mkcert -install
+/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src$ mkcert examplesert example.com localhost 127.0.0.1 ::1
+##ADD certificate and key .pem files to config (Backend and Frontend)
+/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src$ sudo nano /etc/nginx/sites-available/example.com
+/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src$ sudo nginx -t && sudo nginx -s reload
+
+##THIS WORKS WITH ATTENTION IN OPERA!    
+
+##NGINX CONFIG sites-available/example.com
+ #Backend
+server {
+   listen       80;
+   listen [::]:80;
+   server_name example.com;
+
+   # force redirect http to https
+   rewrite ^ https://$http_host$request_uri? permanent;    
+}
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+
+  ssl_certificate /home/preved/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src/examplesert+4.pem;
+  ssl_certificate_key /home/preved/Projects/nextjs-jwt-auth-example/jwt-auth-example/server/src/examplesert+4-key.pem;
+
+  server_name example.com;
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_pass http://localhost:4000/;
+    proxy_ssl_session_reuse off;
+    proxy_set_header Host $http_host;
+    proxy_cache_bypass $http_upgrade;
+    proxy_redirect off;
+  }
+
+  error_log /var/log/nginx/error.log;
+  access_log /var/log/nginx/access.log;
+}
+
+ #Frontend
+server {
+  listen       80;
+   server_name frontend.test;
+
+   # force redirect http to https
+   rewrite ^ https://$http_host$request_uri? permanent;    
+}
+server {
+  listen 443 ssl;
+
+  ssl_certificate /home/preved/Projects/nextjs-jwt-auth-example/jwt-auth-example/web-nextjs/frontendsert+4.pem;
+  ssl_certificate_key /home/preved/Projects/nextjs-jwt-auth-example/jwt-auth-example/web-nextjs/frontendsert+4-key.pem;
+
+  server_name frontend.test;
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_pass http://localhost:3000/;
+    proxy_ssl_session_reuse off;
+    proxy_set_header Host $http_host;
+    proxy_cache_bypass $http_upgrade;
+    proxy_redirect off;
+  }
+
+  error_log /var/log/nginx/error.log;
+  access_log /var/log/nginx/access.log;
+}
+

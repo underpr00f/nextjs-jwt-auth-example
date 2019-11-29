@@ -4,10 +4,9 @@ module.exports = {
   "useNewUrlParser": true,
   "useUnifiedTopology": true,
   "synchronize": true,
-  "logging": false,
-  "useNewUrlParser": true,
+  "logging": true,
   "entities": [
-    process.env.NODE_ENV === "production" ? "dist/entity/*.js" : "src/entity/**/*.ts"
+    process.env.NODE_ENV && process.env.NODE_ENV === "production" ? "public/entity/**/*.js" : "src/entity/**/*.ts"
   ],
   "migrations": ["src/migration/**/*.ts"],
   "subscribers": ["src/subscriber/**/*.ts"],

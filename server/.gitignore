@@ -10,3 +10,4 @@ ormconfigPostgres.json
 ormconfigPostgres.json
 yarn-error.log
 /dist
+**/*.pem

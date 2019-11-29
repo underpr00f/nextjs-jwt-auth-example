@@ -16,6 +16,8 @@ import { frontURL } from './constants';
 
 (async () => {
   const app = express();
+  app.set("trust proxy", 1);
+  console.log("process.env.MONGO_ATLAS_USER", process.env.MONGO_ATLAS_USER);
   const PORT = process.env.PORT || 4000;
   app.use(
     cors({
@@ -24,9 +26,11 @@ import { frontURL } from './constants';
     })
   );
   app.use(cookieParser());
+
   app.get("/", (_req, res) => res.send("hello"));
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid;
+    console.log(frontURL);
     if (!token) {
       return res.send({ ok: false, accessToken: "" });
     }
@@ -56,7 +60,21 @@ import { frontURL } from './constants';
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
-  await createConnection();
+  //FIX problem with deploy on now - add promises
+  await createConnection().then(async () => {
+    console.log("Connected to DB");
+  }).catch(error => console.log(error));
+  // const ready = createConnection();
+  // module.exports = async (req:any, res:any) => {
+  //   console.log(req);
+  //   if (!res) {
+  //     await ready
+  //   }
+  // }
+  // FIX warnings unhandledRejection
+  process.on('unhandledRejection', (reason, promise) => {
+    console.log(promise, 'Unhandled Rejection at:', reason || reason)
+  })
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -68,8 +86,16 @@ import { frontURL } from './constants';
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(PORT, () => {
-    console.log("frontend started on", frontURL, "express server on port", PORT);
+    console.log("frontend started on", frontURL, "express server mode=", process.env.NODE_ENV,"on port", PORT);
   });
+
+  // start https server
+  // let sslOptions = {
+  //    key: fs.readFileSync('src/example.com+5-key.pem', 'utf-8'),
+  //    cert: fs.readFileSync('src/example.com+5.pem', 'utf-8')
+  // };
+
+  // https.createServer(sslOptions, app).listen(4443)
 })();
 
 // createConnection().then(async connection => {
