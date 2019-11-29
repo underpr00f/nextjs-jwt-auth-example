@@ -3,5 +3,5 @@
 export const API_URL = process.env.NODE_ENV === "production" ? 
 	!process.env.ENV ? process.env.API_URL
 	  : process.env.API_URL
-	: !process.env.ENV ? "http://localhost:3001"
+	: !process.env.ENV ? "http://localhost:3000"
   : "https://example.com";
